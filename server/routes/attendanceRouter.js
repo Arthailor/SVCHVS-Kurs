@@ -1,8 +1,8 @@
 const Router = require('express')
 const router = new Router()
+const attendanceController = require('../controllers/attendanceController')
 
-router.post('/',)
-router.get('/',)
-router.get('/:id',)
+router.post('/', attendanceController.create)
+router.get('/', attendanceController.getAll)
 
 module.exports = router

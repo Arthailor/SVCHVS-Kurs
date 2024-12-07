@@ -8,7 +8,7 @@ class EmployeeController{
     }
 
     async check (req, res) {
-        
+
     }
 }
 

@@ -1,8 +1,8 @@
 const Router = require('express')
 const router = new Router()
+const excursionController = require('../controllers/excursionController')
 
-router.post('/',)
-router.get('/',)
-router.get('/:id',)
+router.post('/', excursionController.create)
+router.get('/', excursionController.getAll)
 
 module.exports = router
