@@ -2,7 +2,7 @@ const sequelize = require('../db')
 const {DataTypes} = require('sequelize')
 
 const Employee = sequelize.define('employee',{
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    employee_id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, allowNull: false},
     surname: {type: DataTypes.STRING, allowNull: false},
     position: {type: DataTypes.STRING, allowNull: false},
@@ -11,15 +11,44 @@ const Employee = sequelize.define('employee',{
 })
 
 const Class = sequelize.define('class',{
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    class_id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
     number_of_students: {type: DataTypes.INTEGER, allowNull: false}
 })
 
 const Student = sequelize.define('student',{
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    student_id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, allowNull: false},
     surname: {type: DataTypes.STRING, allowNull: false}
+})
+
+const Trip = sequelize.define('trip',{
+    trip_id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    town: {type: DataTypes.STRING, allowNull: false},
+    point_of_interest: {type: DataTypes.STRING, allowNull: false},
+    img: {type: DataTypes.STRING, allowNull: true}
+})
+
+const Excursion = sequelize.define('excursion',{
+    excursion_id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    date: {type: DataTypes.DATE, allowNull: false}
+})
+
+const Attendance = sequelize.define('attendance',{
+    attendance_id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    status: {type: DataTypes.STRING, allowNull: false},
+    date: {type: DataTypes.DATE, allowNull: false}
+})
+
+const Event = sequelize.define('event',{
+    event_id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    name: {type: DataTypes.STRING, allowNull: false},
+    date: {type: DataTypes.DATE, allowNull: false}
+})
+
+const Participant = sequelize.define('participant',{
+    participant_id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    grade: {type: DataTypes.INTEGER, allowNull: false}
 })
 
 Employee.hasOne(Class)
@@ -28,8 +57,24 @@ Class.belongsTo(Employee)
 Class.hasOne(Student)
 Student.belongsTo(Class)
 
+Class.belongsToMany(Trip,{through: Excursion})
+Trip.belongsToMany(Class,{through: Excursion})
+
+Student.hasMany(Attendance)
+Attendance.belongsTo(Student)
+
+Student.belongsToMany(Event,{through: Participant})
+Class.belongsToMany(Event,{through: Participant})
+Event.belongsToMany(Student,{through: Participant})
+Event.belongsToMany(Class,{through: Participant})
+
 module.exports = {
     Employee,
     Class,
-    Student
+    Student,
+    Trip,
+    Excursion,
+    Attendance,
+    Event,
+    Participant
 }
