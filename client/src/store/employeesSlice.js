@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   employee: {},
-  isAuth: true,
+  isAuth: false,
 };
 
 const employeesSlice = createSlice({
@@ -13,10 +13,10 @@ const employeesSlice = createSlice({
       state.isAuth = action.payload;
     },
     setEmployee: (state, action) => {
-      state.user = action.payload;
+      state.employee = action.payload;
     },
   },
 });
 
-export const { setIsAuth, setUser } = employeesSlice.actions;
+export const { setIsAuth, setEmployee } = employeesSlice.actions;
 export default employeesSlice.reducer;

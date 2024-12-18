@@ -3,8 +3,8 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const {Employee} = require('../models/models')
 
-const generateJwt = (id, email) => {
-    return jwt.sign({id, email}, process.env.SECRET_KEY, {expiresIn: '24h'})
+const generateJwt = (employee_id, email) => {
+    return jwt.sign({employee_id, email}, process.env.SECRET_KEY, {expiresIn: '24h'})
 }
 
 class EmployeeController{
@@ -43,6 +43,7 @@ class EmployeeController{
     }
 
     async check (req, res, next) {
+        console.log(req.employee)
         const token = generateJwt (req.employee.employee_id, req.employee.email)
         return res.json({token})
     }
