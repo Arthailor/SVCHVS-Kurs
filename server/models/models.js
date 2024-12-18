@@ -12,8 +12,7 @@ const Employee = sequelize.define('employee',{
 
 const Class = sequelize.define('class',{
     class_id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: DataTypes.STRING, unique: true, allowNull: false},
-    number_of_students: {type: DataTypes.INTEGER, allowNull: false}
+    name: {type: DataTypes.STRING, unique: true, allowNull: false}
 })
 
 const Student = sequelize.define('student',{
