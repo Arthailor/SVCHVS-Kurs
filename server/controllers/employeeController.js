@@ -43,7 +43,6 @@ class EmployeeController{
     }
 
     async check (req, res, next) {
-        console.log(req.employee)
         const token = generateJwt (req.employee.employee_id, req.employee.email)
         return res.json({token})
     }

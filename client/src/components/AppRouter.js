@@ -8,7 +8,6 @@ export default function AppRouter() {
   const {isAuth} = useSelector((state) => {
     return state.employees;
   })
-  console.log(isAuth) //?
   return (
     <Routes>
       {isAuth && authRoutes.map(({path, Component}) =>

@@ -2,36 +2,37 @@ import { BrowserRouter } from "react-router-dom";
 import { setEmployee, setIsAuth } from "./store/employeesSlice"
 import AppRouter from "./components/AppRouter";
 import NavBar from "./components/NavBar";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { check } from "./http/employeeAPI";
 import { useDispatch } from 'react-redux'
-import { Spinner } from "react-bootstrap";
-import { jwtDecode } from "jwt-decode"
+import { Container, Spinner } from "react-bootstrap";
 
 function App() {
-  // const [loading, SetLoading] = useState(true)
+  const [loading, SetLoading] = useState(true)
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // const handleEmployee = (ob) => {
-  //   dispatch(setEmployee(ob))
-  // }
-  // const handleAuth = (bool) => {
-  //   dispatch(setIsAuth(bool))
-  // }
-  // const employee = jwtDecode(localStorage.getItem('token'))
+  const handleEmployee = (ob) => {
+    dispatch(setEmployee(ob))
+  }
+  const handleAuth = (bool) => {
+    dispatch(setIsAuth(bool))
+  }
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      check().then(data => {
+        handleEmployee(data)
+        handleAuth(true)
+      }).finally(() => SetLoading(false))
+    }
+    else {
+      SetLoading(false)
+    }
+  }, [])
 
-  // useEffect(() => {
-  //   check(employee).then(data => {
-  //     handleEmployee(data)
-  //     handleAuth(true)
-  //   }).finally(() => SetLoading(false))
-  // }, [])
-
-  // if (loading) {
-  //   return <Spinner animation={"grow"} />
-  // }
-
+  if (loading) {
+    return <Container className="d-flex justify-content-center align-items-center" style={{height: window.innerHeight - 54}}><Spinner animation={"grow"} /></Container>
+  }
   return (
     <BrowserRouter>
       <NavBar />

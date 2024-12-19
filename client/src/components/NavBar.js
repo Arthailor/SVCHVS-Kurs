@@ -6,11 +6,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ADMIN_ROUTE, LOGIN_ROUTE, MAIN_ROUTE } from '../utils/consts';
 import { Button } from 'react-bootstrap';
-import { setIsAuth } from "../store/employeesSlice"
+import { setIsAuth, setEmployee } from "../store/employeesSlice"
 
 
 export default function NavBar() {
-    const {isAuth} = useSelector((state) => {
+    const {isAuth, employee} = useSelector((state) => {
         return state.employees;
       })
       
@@ -18,8 +18,17 @@ export default function NavBar() {
     const handleAuth = (bool) => {
         dispatch(setIsAuth(bool))
     }
+    const handleEmployee = (ob) => {
+      dispatch(setEmployee(ob))
+    }
 
     const history = useNavigate()
+
+    const logOut = () => {
+      handleEmployee({})
+      handleAuth(false)
+      localStorage.removeItem('token')
+    }
 
   return (
     <Navbar bg="primary" data-bs-theme="dark">
@@ -28,7 +37,7 @@ export default function NavBar() {
           {isAuth ? 
             <Nav className="ml-auto" style={{color: 'white'}}>
                 <Button variant={"outline-light"} onClick={() => history(ADMIN_ROUTE)} className="mr-4">Admin Menu</Button>
-                <Button variant={"outline-light"} onClick={() => handleAuth(false)} className="ml-4">Exit</Button>
+                <Button variant={"outline-light"} onClick={() => logOut()} className="ml-4">Exit</Button>
             </Nav>
             :
             <Nav className="ml-auto" style={{color: 'white'}}>
