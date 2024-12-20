@@ -1,4 +1,4 @@
-import {React, useState} from 'react'
+import { React, useState } from 'react'
 import { Container, Form, Card, Button, Row } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import { setEmployee, setIsAuth } from "../store/employeesSlice"
@@ -13,18 +13,18 @@ export default function Authorization() {
   const history = useNavigate()
 
   const dispatch = useDispatch();
-      const handleEmployee = (ob) => {
-          dispatch(setEmployee(ob))
-      }
-      const handleAuth = (bool) => {
-              dispatch(setIsAuth(bool))
-          }
+  const handleEmployee = (ob) => {
+    dispatch(setEmployee(ob))
+  }
+  const handleAuth = (bool) => {
+    dispatch(setIsAuth(bool))
+  }
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   const click = async () => {
-    try{
+    try {
       let data;
       data = await login(email, password)
       handleEmployee(data)
@@ -36,11 +36,11 @@ export default function Authorization() {
   }
 
   return (
-    <Container 
+    <Container
       className="d-flex justify-content-center align-items-center"
-      style={{height: window.innerHeight - 54}}
+      style={{ height: window.innerHeight - 54 }}
     >
-      <Card style={{width: 600}} className="p-5">
+      <Card style={{ width: 600 }} className="p-5">
         <h2 className="m-auto">Authorization</h2>
         <Form className="d-flex flex-column">
           <Form.Control

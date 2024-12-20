@@ -31,7 +31,7 @@ function App() {
   }, [])
 
   if (loading) {
-    return <Container className="d-flex justify-content-center align-items-center" style={{height: window.innerHeight - 54}}><Spinner animation={"grow"} /></Container>
+    return <Container className="d-flex justify-content-center align-items-center" style={{ height: window.innerHeight - 54 }}><Spinner animation={"grow"} /></Container>
   }
   return (
     <BrowserRouter>
