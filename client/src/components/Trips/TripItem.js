@@ -14,7 +14,7 @@ export default function TripItem({ trip }) {
           <div>{trip.point_of_interest}</div>
         </div>
       </Card>
-      <TripModal point_of_interest={trip.point_of_interest} town={trip.town} img={trip.img} trip_id={trip.trip_id}
+      <TripModal point_of_interest={trip.point_of_interest} town={trip.town} img={trip.img} trip_id={trip.trip_id} description={trip.description}
         show={modalShow}
         onHide={() => setModalShow(false)}
       />

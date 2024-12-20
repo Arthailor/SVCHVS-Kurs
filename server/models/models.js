@@ -25,6 +25,7 @@ const Trip = sequelize.define('trip',{
     trip_id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     town: {type: DataTypes.STRING, allowNull: false},
     point_of_interest: {type: DataTypes.STRING, allowNull: false},
+    description: {type: DataTypes.STRING(755), allowNull: true},
     img: {type: DataTypes.STRING, allowNull: true}
 })
 

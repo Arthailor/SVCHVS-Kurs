@@ -7,12 +7,12 @@ const fs = require('fs')
 class TripController {
     async create(req, res, next) {
         try {
-            const { town, point_of_interest } = req.body
+            const { town, point_of_interest, description } = req.body
             const { img } = req.files
             let fileName = uuid.v4() + ".jpg"
             img.mv(path.resolve(__dirname, '..', 'static', fileName))
 
-            const trip = await Trip.create({ town, point_of_interest, img: fileName })
+            const trip = await Trip.create({ town, point_of_interest, description, img: fileName })
 
             return res.json(trip)
         } catch (e) {

@@ -28,8 +28,10 @@ export default function TripModal(props) {
           {props.point_of_interest}
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body className="d-flex justify-content-center align-items-center">
-        <Image width={640} height={360} src={process.env.REACT_APP_API_URL + props.img} />
+      <Modal.Body className="d-flex justify-content-center align-items-center flex-column">
+        <Image style={{maxWidth:"100%", maxHeight:"auto"}} src={process.env.REACT_APP_API_URL + props.img} />
+        <h2>Description</h2>
+        <p>{props.description}</p>
       </Modal.Body>
       {isAuth ?
         <Modal.Footer>

@@ -10,7 +10,7 @@ import { setIsAuth, setEmployee } from "../store/employeesSlice"
 
 
 export default function NavBar() {
-  const { isAuth, employee } = useSelector((state) => {
+  const { isAuth } = useSelector((state) => {
     return state.employees;
   })
 

@@ -8,6 +8,7 @@ export default function CreateTripModal({ show, onHide }) {
 
   const [town, setTown] = useState('')
   const [poi, setPoi] = useState('')
+  const [description, setDescription] = useState('')
   const [file, setFile] = useState(null)
 
   const selectFile = e => {
@@ -18,6 +19,7 @@ export default function CreateTripModal({ show, onHide }) {
     const formData = new FormData()
     formData.append('town', town)
     formData.append('point_of_interest', poi)
+    formData.append('description', description)
     formData.append('img', file)
     createTrip(formData).then(data => onHide())
   }
@@ -36,8 +38,9 @@ export default function CreateTripModal({ show, onHide }) {
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Form.Control className="mt-2" placeholder={"Town"} value={town} onChange={e => setTown(e.target.value)} />
-          <Form.Control className="mt-2" placeholder={"Point of interest"} value={poi} onChange={e => setPoi(e.target.value)} />
+          <Form.Control maxLength="25" className="mt-2" placeholder={"Town"} value={town} onChange={e => setTown(e.target.value)} />
+          <Form.Control maxLength="75" className="mt-2" placeholder={"Point of interest"} value={poi} onChange={e => setPoi(e.target.value)} />
+          <Form.Control maxLength="755" className="mt-2" as="textarea" rows={3} placeholder={"Description"} value={description} onChange={e => setDescription(e.target.value)} />
           <Form.Control className="mt-2" type="file" onChange={selectFile} />
         </Form>
       </Modal.Body>

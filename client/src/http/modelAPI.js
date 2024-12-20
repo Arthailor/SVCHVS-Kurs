@@ -5,8 +5,10 @@ export const createTrip = async (trip) => {
     return data
 }
 
-export const fetchTrips = async () => {
-    const { data } = await $host.get('api/trip/')
+export const fetchTrips = async (town, page, limit = 5) => {
+    const { data } = await $host.get('api/trip/', {params: {
+        town, page, limit
+    }})
     return data
 }
 

@@ -3,11 +3,10 @@ import { ListGroup } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSelectedTown } from "../../store/tripsSlice"
 
-export default function TownsBar() {
+export default function TownsBar({uniqueTowns}) {
   const { trips, selectedTown } = useSelector((state) => {
     return state.trips;
   })
-  const uniqueTowns = [...new Set(trips.map(trip => trip.town))].sort();
   const dispatch = useDispatch();
   const handleTownSelection = (string) => {
     dispatch(setSelectedTown(string))
