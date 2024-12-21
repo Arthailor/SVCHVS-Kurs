@@ -2,10 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   trips: [],
-  selectedTown: "",
+  selectedTown: "All",
   page: 1,
   totalCount: 0,
-  limit: 9
+  limit: 8
 };
 
 const tripsSlice = createSlice({

@@ -40,17 +40,11 @@ class ClassController{
     }
 
     async getAll (req, res) {
-        let { employee_id, limit, page } = req.query
+        let { limit, page } = req.query
         page = page || 1
         limit = limit || 9
         let offset = page * limit - limit
-        let classes
-        if (!employee_id) {
-            classes = await Class.findAndCountAll({ limit, offset })
-        }
-        if (employee_id) {
-            classes = await Class.findAndCountAll({ where: { employeeEmployeeId: employee_id }, limit, offset })
-        }
+        let classes = await Class.findAndCountAll({ limit, offset })
         return res.json(classes)
     }
 

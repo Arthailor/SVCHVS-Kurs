@@ -3,8 +3,8 @@ import { ListGroup } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSelectedTown } from "../../store/tripsSlice"
 
-export default function TownsBar({uniqueTowns}) {
-  const { trips, selectedTown } = useSelector((state) => {
+export default function TownsBar({ uniqueTowns }) {
+  const { selectedTown } = useSelector((state) => {
     return state.trips;
   })
   const dispatch = useDispatch();

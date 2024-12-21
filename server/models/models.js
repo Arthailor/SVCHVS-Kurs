@@ -51,22 +51,22 @@ const Participant = sequelize.define('participant',{
     grade: {type: DataTypes.INTEGER, allowNull: false}
 })
 
-Employee.hasOne(Class)
+Employee.hasOne(Class, { onDelete: 'cascade' })
 Class.belongsTo(Employee)
 
-Class.hasOne(Student)
+Class.hasOne(Student, { onDelete: 'cascade' })
 Student.belongsTo(Class)
 
-Class.belongsToMany(Trip,{through: Excursion})
-Trip.belongsToMany(Class,{through: Excursion})
+Class.belongsToMany(Trip,{through: Excursion}, { onDelete: 'cascade' })
+Trip.belongsToMany(Class,{through: Excursion}, { onDelete: 'cascade' })
 
 Student.hasMany(Attendance)
 Attendance.belongsTo(Student)
 
-Student.belongsToMany(Event,{through: Participant})
-Class.belongsToMany(Event,{through: Participant})
-Event.belongsToMany(Student,{through: Participant})
-Event.belongsToMany(Class,{through: Participant})
+Student.belongsToMany(Event,{through: Participant}, { onDelete: 'cascade' })
+Class.belongsToMany(Event,{through: Participant}, { onDelete: 'cascade' })
+Event.belongsToMany(Student,{through: Participant}, { onDelete: 'cascade' })
+Event.belongsToMany(Class,{through: Participant}, { onDelete: 'cascade' })
 
 module.exports = {
     Employee,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Form, Card, Button } from 'react-bootstrap'
+import { Container, Form, Card, Button, Image } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom';
 import { ATTENDANCE_ROUTE, CLASSES_ROUTE, EVENTS_ROUTE, EXCURSIONS_ROUTE, TRIPS_ROUTE } from '../utils/consts';
 
@@ -12,20 +12,40 @@ export default function MainMenu() {
       <Card style={{ width: 600 }} className="p-5">
         <h2 className="m-auto">Main menu</h2>
         <Form className="d-flex flex-column">
-          <NavLink to={TRIPS_ROUTE} className="mt-3 ">
-            <Button variant={"outline-primary"} style={{ width: "100%" }}>Trips</Button>
+          <NavLink to={TRIPS_ROUTE} className="mt-3 " style={{textDecoration: 'none'}}>
+            <Button className="d-flex justify-content-between" variant={"outline-primary"} style={{ width: "100%" }}>
+              <Image width ="20" src="./museum.png" fluid/>
+              <div style={{marginRight:20}}>Trips</div>
+              <div></div>
+            </Button>
           </NavLink>
-          <NavLink to={EXCURSIONS_ROUTE} className="mt-3">
-            <Button variant={"outline-primary"} style={{ width: "100%" }}>Excursions</Button>
+          <NavLink to={EXCURSIONS_ROUTE} className="mt-3" style={{textDecoration: 'none'}}>
+            <Button className="d-flex justify-content-between" variant={"outline-primary"} style={{ width: "100%" }}>
+              <Image width ="20" src="./bus.png" fluid/>
+              <div style={{marginRight:20}}>Excursions</div>
+              <div></div>
+            </Button>
           </NavLink>
-          <NavLink to={CLASSES_ROUTE} className="mt-3">
-            <Button variant={"outline-primary"} style={{ width: "100%" }}>Classes</Button>
+          <NavLink to={CLASSES_ROUTE} className="mt-3" style={{textDecoration: 'none'}}>
+            <Button className="d-flex justify-content-between" variant={"outline-primary"} style={{ width: "100%" }}>
+              <Image width ="20" src="./hat.png" fluid/>
+              <div style={{marginRight:20}}>Classes</div>
+              <div></div>
+            </Button>
           </NavLink>
-          <NavLink to={ATTENDANCE_ROUTE} className="mt-3">
-            <Button variant={"outline-primary"} style={{ width: "100%" }}>Attendance</Button>
+          <NavLink to={ATTENDANCE_ROUTE} className="mt-3" style={{textDecoration: 'none'}}>
+            <Button className="d-flex justify-content-between" variant={"outline-primary"} style={{ width: "100%" }}>
+              <Image width ="20" src="./attend.png" fluid/>
+              <div style={{marginRight:20}}>Attendance</div>
+              <div></div>
+            </Button>
           </NavLink>
-          <NavLink to={EVENTS_ROUTE} className="mt-3">
-            <Button variant={"outline-primary"} style={{ width: "100%" }}>Events</Button>
+          <NavLink to={EVENTS_ROUTE} className="mt-3" style={{textDecoration: 'none'}}>
+            <Button className="d-flex justify-content-between" variant={"outline-primary"} style={{ width: "100%" }}>
+              <Image width ="20" src="./table.png" fluid/>
+              <div style={{marginRight:20}}>Events</div>
+              <div></div>
+            </Button>
           </NavLink>
 
         </Form>

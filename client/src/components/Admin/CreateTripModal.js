@@ -21,7 +21,13 @@ export default function CreateTripModal({ show, onHide }) {
     formData.append('point_of_interest', poi)
     formData.append('description', description)
     formData.append('img', file)
-    createTrip(formData).then(data => onHide())
+    createTrip(formData).then(data => {
+      onHide()
+      setTown('')
+      setPoi('')
+      setDescription('')
+      setFile(null)
+    })
   }
 
   return (
@@ -46,7 +52,11 @@ export default function CreateTripModal({ show, onHide }) {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="outline-danger" onClick={onHide}>Close</Button>
-        <Button variant="outline-success" onClick={addTrip}>Add</Button>
+        {town === '' || poi === '' || description === '' || file === null ?
+          <Button variant="outline-success" disabled>Add</Button>
+          :
+          <Button variant="outline-success" onClick={addTrip}>Add</Button>
+        }
       </Modal.Footer>
     </Modal>
   )

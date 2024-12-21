@@ -5,12 +5,10 @@ import { Image } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import { deleteTrip } from '../../http/modelAPI';
 
-
 export default function TripModal(props) {
   const { isAuth } = useSelector((state) => {
     return state.employees;
   })
-
   const delTrip = (tripId) => {
     deleteTrip(tripId).finally(() => window.location.reload())
     props.onHide()
@@ -29,7 +27,7 @@ export default function TripModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className="d-flex justify-content-center align-items-center flex-column">
-        <Image style={{maxWidth:"100%", maxHeight:"auto"}} src={process.env.REACT_APP_API_URL + props.img} />
+        <Image style={{ maxWidth: "100%", maxHeight: "auto" }} src={process.env.REACT_APP_API_URL + props.img} />
         <h2>Description</h2>
         <p>{props.description}</p>
       </Modal.Body>

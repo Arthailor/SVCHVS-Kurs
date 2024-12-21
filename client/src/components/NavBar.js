@@ -2,6 +2,7 @@ import React from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import Image from 'react-bootstrap/Image'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ADMIN_ROUTE, LOGIN_ROUTE, MAIN_ROUTE } from '../utils/consts';
@@ -33,11 +34,12 @@ export default function NavBar() {
   return (
     <Navbar bg="primary" data-bs-theme="dark">
       <Container>
-        <NavLink style={{ color: 'white' }} to={MAIN_ROUTE}>School</NavLink>
+        <NavLink to={MAIN_ROUTE}><Image width ="35" src="./favico.ico" fluid/></NavLink>
+        {/* <NavLink style={{ color: 'white' }} to={MAIN_ROUTE}>School</NavLink> */}
         {isAuth ?
           <Nav className="ml-auto" style={{ color: 'white' }}>
-            <Button variant={"outline-light"} onClick={() => history(ADMIN_ROUTE)} className="mr-4">Admin Menu</Button>
-            <Button variant={"outline-light"} onClick={() => logOut()} className="ml-4">Exit</Button>
+            <Button variant={"outline-light"} onClick={() => history(ADMIN_ROUTE)}>Admin Menu</Button>
+            <Button variant={"outline-light"} onClick={() => logOut()}>Exit</Button>
           </Nav>
           :
           <Nav className="ml-auto" style={{ color: 'white' }}>

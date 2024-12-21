@@ -6,7 +6,8 @@ import ExcursionMenu from "./pages/menus/ExcursionMenu"
 import EventMenu from "./pages/menus/EventMenu"
 import ClassMenu from "./pages/menus/ClassMenu"
 import AttendanceMenu from "./pages/menus/AttendanceMenu"
-import { ADMIN_ROUTE, ATTENDANCE_ROUTE, CLASSES_ROUTE, EVENTS_ROUTE, EXCURSIONS_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE, TRIPS_ROUTE } from "./utils/consts"
+import EmployeeListMenu from "./pages/menus/EmployeeMenu"
+import { ADMIN_ROUTE, ATTENDANCE_ROUTE, CLASSES_ROUTE, EVENTS_ROUTE, EXCURSIONS_ROUTE, LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE, TRIPS_ROUTE, EMPLOYEES_ROUTE} from "./utils/consts"
 
 export const authRoutes = [
     {
@@ -16,6 +17,10 @@ export const authRoutes = [
     {
         path: REGISTRATION_ROUTE,
         Component: Authorization
+    },
+    {
+        path: EMPLOYEES_ROUTE,
+        Component: EmployeeListMenu
     }
 ]
 

@@ -9,7 +9,7 @@ const generateJwt = (employee_id, email) => {
 
 class EmployeeController {
     async registration(req, res, next) {
-        const { email, password, name, surname, position } = req.body
+        const { name, surname, position, email, password } = req.body
         if (!email || !password) {
             return next(ApiError.badRequest('Incorrect email or password'))
         }
@@ -48,6 +48,33 @@ class EmployeeController {
     async check(req, res, next) {
         const token = generateJwt(req.employee.employee_id, req.employee.email)
         return res.json({ token })
+    }
+
+    async getAll(req, res) {
+        let { limit, page } = req.query
+        page = page || 1
+        limit = limit || 9
+        let offset = page * limit - limit
+        let employees = await Employee.findAndCountAll({ limit, offset })
+        return res.json(employees)
+    }
+
+    async delete(req, res, next) {
+        try {
+            const { employee_id } = req.params
+            const employee = await Employee.findOne(
+                { where: { employee_id: employee_id } },
+            )
+            if (!employee) {
+                return next(ApiError.internal('There is no such employee in database'))
+            }
+            await Employee.destroy(
+                { where: { employee_id: employee_id } },
+            )
+            return res.json()
+        } catch (e) {
+            next(ApiError.badRequest(e.message))
+        }
     }
 }
 

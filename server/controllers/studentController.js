@@ -36,16 +36,13 @@ class StudentController{
     }
 
     async getAll (req, res) {
-        let { class_id, limit, page } = req.query
-        page = page || 1
-        limit = limit || 9
-        let offset = page * limit - limit
+        let { class_id } = req.query
         let students
         if (!class_id) {
-            students = await Student.findAndCountAll({ limit, offset })
+            students = await Student.findAndCountAll()
         }
         if (class_id) {
-            students = await Student.findAndCountAll({ where: { classClassId: class_id }, limit, offset })
+            students = await Student.findAndCountAll({ where: { classClassId: class_id } })
         }
         return res.json(students)
     }

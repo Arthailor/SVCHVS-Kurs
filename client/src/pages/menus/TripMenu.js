@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import TownsBar from '../../components/Trips/TownsBar'
 import TripsList from '../../components/Trips/TripsList'
-import { setTrips, setTotalCount } from "../../store/tripsSlice"
+import { setTrips, setTotalCount, setPage } from "../../store/tripsSlice"
 import { fetchTrips } from '../../http/modelAPI'
 import { useDispatch, useSelector } from 'react-redux'
 import Pages from '../../components/Pages'
@@ -10,7 +10,7 @@ import Pages from '../../components/Pages'
 export default function TripMenu() {
   const [allTrips, setAllTrips] = React.useState([]);
 
-  const { page, selectedTown } = useSelector((state) => {
+  const { page, selectedTown, totalCount, limit } = useSelector((state) => {
     return state.trips;
   })
 
@@ -21,9 +21,12 @@ export default function TripMenu() {
   const handleTotalCount = (c) => {
     dispatch(setTotalCount(c))
   }
+  const handlePage = (n) => {
+    dispatch(setPage(n))
+  }
 
   useEffect(() => {
-    fetchTrips(null, 1, 9).then(data => {
+    fetchTrips(null, 1, 8).then(data => {
       handleTrips(data.rows)
       handleTotalCount(data.count)
     })
@@ -36,12 +39,12 @@ export default function TripMenu() {
 
   useEffect(() => {
     if (selectedTown === "All") {
-      fetchTrips(null, page, 9).then(data => {
+      fetchTrips(null, page, 8).then(data => {
         handleTrips(data.rows)
         handleTotalCount(data.count)
       })
     } else {
-      fetchTrips(selectedTown, page, 9).then(data => {
+      fetchTrips(selectedTown, page, 8).then(data => {
         handleTrips(data.rows)
         handleTotalCount(data.count)
       })
@@ -55,8 +58,12 @@ export default function TripMenu() {
           <TownsBar uniqueTowns={uniqueTowns} />
         </Col>
         <Col md={9} className="mt-2">
-          <TripsList />
-          <Pages />
+          {allTrips.length === 0 ?
+            "Empty list"
+            :
+            <TripsList />
+          }
+          <Pages totalCount={totalCount} limit={limit} page={page} handlePage={(p) => handlePage(p)} />
         </Col>
       </Row>
     </Container>
