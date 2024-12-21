@@ -62,3 +62,23 @@ export const deleteStudent = async (id) => {
     const { data } = await $authHost.delete('api/student/' + id)
     return data
 }
+
+//Excursions
+export const createExcursion = async (name, employeeEmployeeId) => {
+    const { data } = await $authHost.post('api/excursion/', { name, employeeEmployeeId })
+    return data
+}
+
+export const fetchExcursions = async (trip_id, class_id, page, limit = 5) => {
+    const { data } = await $host.get('api/excursion/', {
+        params: {
+            trip_id, class_id, page, limit
+        }
+    })
+    return data
+}
+
+export const deleteExcursion = async (id) => {
+    const { data } = await $authHost.delete('api/excursion/' + id)
+    return data
+}

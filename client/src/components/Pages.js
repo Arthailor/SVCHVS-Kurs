@@ -1,16 +1,7 @@
 import React from 'react'
 import { Pagination } from "react-bootstrap"
-import { useDispatch, useSelector } from 'react-redux'
-import { setPage } from "../store/tripsSlice"
 
 export default function Pages({totalCount, limit, page, handlePage}) {
-  // const { totalCount, limit, page } = useSelector((state) => {
-  //   return state.trips;
-  // })
-  // const dispatch = useDispatch();
-    // const handlePage = (n) => {
-    //   dispatch(setPage(n))
-    // }
   const pageCount = Math.ceil(totalCount / limit)
   const pages = []
 

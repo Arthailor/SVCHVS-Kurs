@@ -31,19 +31,19 @@ const Trip = sequelize.define('trip',{
 
 const Excursion = sequelize.define('excursion',{
     excursion_id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    date: {type: DataTypes.DATE, allowNull: false}
+    date: {type: DataTypes.DATEONLY, allowNull: false}
 })
 
 const Attendance = sequelize.define('attendance',{
     attendance_id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     status: {type: DataTypes.STRING, allowNull: false},
-    date: {type: DataTypes.DATE, allowNull: false}
+    date: {type: DataTypes.DATEONLY, allowNull: false}
 })
 
 const Event = sequelize.define('event',{
     event_id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, allowNull: false},
-    date: {type: DataTypes.DATE, allowNull: false}
+    date: {type: DataTypes.DATEONLY, allowNull: false}
 })
 
 const Participant = sequelize.define('participant',{
