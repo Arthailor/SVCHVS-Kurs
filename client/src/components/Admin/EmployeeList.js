@@ -24,7 +24,6 @@ export default function EmployeeList({ employees }) {
                 <ListGroup>
                     {employees.map(emp =>
                         <ListGroup.Item
-                            style={{ cursor: "pointer" }}
                             key={emp.employee_id}
                             className="d-flex justify-content-between"
                         >

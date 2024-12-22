@@ -7,7 +7,7 @@ export const createTrip = async (trip) => {
     return data
 }
 
-export const fetchTrips = async (town, page, limit = 5) => {
+export const fetchTrips = async (town, page, limit) => {
     const { data } = await $host.get('api/trip/', {
         params: {
             town, page, limit
@@ -33,7 +33,7 @@ export const createClass = async (name, employeeEmployeeId) => {
     return data
 }
 
-export const fetchClasses = async (page, limit = 5) => {
+export const fetchClasses = async (page, limit) => {
     const { data } = await $host.get('api/class/', {
         params: {
             page, limit
@@ -53,8 +53,12 @@ export const createStudent = async (name, surname, classClassId) => {
     return data
 }
 
-export const fetchStudents = async () => {
-    const { data } = await $host.get('api/student/')
+export const fetchStudents = async (classClassId, page, limit) => {
+    const { data } = await $host.get('api/student/', {
+        params: {
+            classClassId, page, limit
+        }
+    })
     return data
 }
 
@@ -64,8 +68,8 @@ export const deleteStudent = async (id) => {
 }
 
 //Excursions
-export const createExcursion = async (name, employeeEmployeeId) => {
-    const { data } = await $authHost.post('api/excursion/', { name, employeeEmployeeId })
+export const createExcursion = async (tripTripId, classClassId, date) => {
+    const { data } = await $authHost.post('api/excursion/', { tripTripId, classClassId, date })
     return data
 }
 
@@ -80,5 +84,25 @@ export const fetchExcursions = async (trip_id, class_id, page, limit = 5) => {
 
 export const deleteExcursion = async (id) => {
     const { data } = await $authHost.delete('api/excursion/' + id)
+    return data
+}
+
+//Attendance
+export const createAttendance = async (studentStudentId, status, date) => {
+    const { data } = await $authHost.post('api/attendance/', { studentStudentId, status, date })
+    return data
+}
+
+export const fetchAttendance = async (student_id) => {
+    const { data } = await $host.get('api/attendance/', {
+        params: {
+            student_id
+        }
+    })
+    return data
+}
+
+export const deleteAttendance = async (id) => {
+    const { data } = await $authHost.delete('api/attendance/' + id)
     return data
 }

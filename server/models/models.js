@@ -36,7 +36,7 @@ const Excursion = sequelize.define('excursion',{
 
 const Attendance = sequelize.define('attendance',{
     attendance_id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    status: {type: DataTypes.STRING, allowNull: false},
+    status: {type: DataTypes.BOOLEAN, allowNull: false},
     date: {type: DataTypes.DATEONLY, allowNull: false}
 })
 

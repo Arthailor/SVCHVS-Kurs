@@ -4,8 +4,8 @@ import { fetchClasses, fetchExcursions, fetchTrips } from '../../http/modelAPI'
 import { useDispatch, useSelector } from 'react-redux'
 import { setClasses } from '../../store/classesSlice'
 import { setTrips } from '../../store/tripsSlice'
-import ClassesDrop from '../../components/Excursions/ClassesDrop'
-import TripsDrop from '../../components/Excursions/TripsDrop'
+import ClassesDrop from '../../components/ClassesDrop'
+import TripsDrop from '../../components/TripsDrop'
 import { setExcursions, setPage, setSelectedClass, setSelectedTrip, setTotalCount } from '../../store/excursionsSlice'
 import Pages from '../../components/Pages'
 import ExcursionsList from '../../components/Excursions/ExcursionsList'
@@ -46,13 +46,13 @@ export default function ExcursionMenu() {
 
 
   useEffect(() => {
-    fetchClasses(null, 1, 999).then(data => {
+    fetchClasses( 1, 999).then(data => {
       handleClasses(data.rows)
     })
     fetchTrips(null, 1, 999).then(data => {
       handleTrips(data.rows)
     })
-    fetchExcursions(null, null, 1, 4).then(data => {
+    fetchExcursions(null, null, 1, 10).then(data => {
       handleExcursions(data.rows)
       handleTotalCount(data.count)
     })
@@ -60,22 +60,22 @@ export default function ExcursionMenu() {
 
   useEffect(() => {
     if (selectedTrip === "All" && selectedClass === "All") {
-      fetchExcursions(null, null, page, 4).then(data => {
+      fetchExcursions(null, null, page, 10).then(data => {
         handleExcursions(data.rows)
         handleTotalCount(data.count)
       })
     } else if (selectedTrip === "All") {
-      fetchExcursions(null, selectedClass, page, 4).then(data => {
+      fetchExcursions(null, selectedClass, page, 10).then(data => {
         handleExcursions(data.rows)
         handleTotalCount(data.count)
       })
     } else if (selectedClass === "All") {
-      fetchExcursions(selectedTrip, null, page, 4).then(data => {
+      fetchExcursions(selectedTrip, null, page, 10).then(data => {
         handleExcursions(data.rows)
         handleTotalCount(data.count)
       })
     } else {
-      fetchExcursions(selectedTrip, selectedClass, page, 4).then(data => {
+      fetchExcursions(selectedTrip, selectedClass, page, 10).then(data => {
         handleExcursions(data.rows)
         handleTotalCount(data.count)
       })

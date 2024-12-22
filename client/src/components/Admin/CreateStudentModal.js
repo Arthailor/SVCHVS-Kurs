@@ -18,6 +18,7 @@ export default function CreateStudentModal({ show, onHide }) {
             onHide('')
             setName('')
             setSurname('')
+            setClass('')
         })
     }
     return (

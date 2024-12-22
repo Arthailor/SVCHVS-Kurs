@@ -31,7 +31,7 @@ export default function ClassesList({ classes }) {
     }, [])
 
     useEffect(() => {
-        fetchStudents().then(data => {
+        fetchStudents(null, 1, 999).then(data => {
             handleStudents(data.rows)
         })
     }, [])

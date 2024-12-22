@@ -12,15 +12,20 @@ export default function CreateEmployeeModal({ show, onHide }) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const addEmployee = () => {
-        registration(name, surname, position, email, password).then(() => {
-            onHide('')
-            setName('')
-            setSurname('')
-            setPosition('')
-            setEmail('')
-            setPassword('')
-        })
+    const addEmployee = async () => {
+        try {
+            let data;
+            data = await registration(name, surname, position, email, password).then(() => {
+                onHide('')
+                setName('')
+                setSurname('')
+                setPosition('')
+                setEmail('')
+                setPassword('')
+            })
+        } catch (e) {
+            alert(e.response.data.message)
+        }
     }
 
     return (

@@ -4,6 +4,7 @@ import tripsReducer from "./tripsSlice";
 import classReducer from "./classesSlice";
 import studentsReducer from "./studentsSlice"
 import excursionsReducer from "./excursionsSlice"
+import attendanceReducer from "./attendanceSlice"
 
 const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ const store = configureStore({
     trips: tripsReducer,
     classes: classReducer,
     students: studentsReducer,
-    excursions: excursionsReducer
+    excursions: excursionsReducer,
+    attendance: attendanceReducer
   },
 });
 
