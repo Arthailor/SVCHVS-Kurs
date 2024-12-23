@@ -1,13 +1,17 @@
 const ApiError = require("../error/apiError")
 const { Attendance, Student } = require("../models/models")
+const pdfTemplate = require('../documents/attendpdf')
+const pdf = require('html-pdf')
+const path = require('path');
+const fs = require('fs')
 
-class AttendanceController{
-    async create (req, res, next) {
+class AttendanceController {
+    async create(req, res, next) {
         try {
             const { studentStudentId, status, date } = req.body
             if (!studentStudentId)
                 return next(ApiError.badRequest('No student id'))
-            const student = await Student.findOne({where: {student_id: studentStudentId}})
+            const student = await Student.findOne({ where: { student_id: studentStudentId } })
             if (!student)
                 return next(ApiError.badRequest('Incorrect student id'))
             const attendance = await Attendance.create({ studentStudentId, status, date })
@@ -35,18 +39,38 @@ class AttendanceController{
         }
     }
 
-    async getAll (req, res) {
+    async getAll(req, res) {
         let { student_id } = req.query
         let attendances
         if (!student_id) {
             attendances = await Attendance.findAndCountAll()
         }
         if (student_id) {
-            attendances = await Attendance.findAndCountAll({ where: { studentStudentId: student_id }})
+            attendances = await Attendance.findAndCountAll({ where: { studentStudentId: student_id } })
         }
         return res.json(attendances)
     }
 
+    async createPdf(req, res) {
+        pdf.create(pdfTemplate(req.body), {}).toFile("attendance.pdf", (err) => {
+            if (err) {
+                return res.status(500).json({ message: "PDF creation failed" });
+            }
+            res.status(200).json({ message: "PDF created successfully" });
+        });
+    }
+
+    async getPdf(req, res, next) {
+        try {
+            const filePath = path.resolve(__dirname, '../attendance.pdf');
+            if (!fs.existsSync(filePath)) {
+                throw new Error('PDF file not found');
+            }
+            res.sendFile(filePath);
+        } catch (e) {
+            next(ApiError.badRequest(e.message));
+        }
+    }
 }
 
 module.exports = new AttendanceController()

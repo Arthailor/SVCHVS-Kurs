@@ -7,11 +7,14 @@ const fileUpload = require('express-fileupload')
 const router = require('./routes/index')
 const errorHandler = require('./middleware/errorHandlingMiddleware')
 const path = require('path')
+const bodyParser = require('body-parser')
 
 const PORT = process.env.PORT || 7000
 
 const app = express()
 app.use(cors())
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
 app.use(express.json())
 app.use(fileUpload({}))
 app.use(express.static(path.resolve(__dirname, 'static')))

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
-import { fetchClasses, fetchExcursions, fetchTrips } from '../../http/modelAPI'
+import { Button, Col, Container, Row } from 'react-bootstrap'
+import { createAndDownloadExcPdf, fetchClasses, fetchExcursions, fetchTrips } from '../../http/modelAPI'
 import { useDispatch, useSelector } from 'react-redux'
 import { setClasses } from '../../store/classesSlice'
 import { setTrips } from '../../store/tripsSlice'
@@ -46,7 +46,7 @@ export default function ExcursionMenu() {
 
 
   useEffect(() => {
-    fetchClasses( 1, 999).then(data => {
+    fetchClasses(1, 999).then(data => {
       handleClasses(data.rows)
     })
     fetchTrips(null, 1, 999).then(data => {
@@ -86,8 +86,9 @@ export default function ExcursionMenu() {
     <Container>
       <Row className="mt-2">
         <Col md={3}>
-          <ClassesDrop classes={classes} setClass={(c) => handleSelectedClass(c)} selectedClass={selectedClass}/>
-          <TripsDrop trips={trips} setTrip={(t) => handleSelectedTrip(t)} selectedTrip={selectedTrip}/>
+          <ClassesDrop classes={classes} setClass={(c) => handleSelectedClass(c)} selectedClass={selectedClass} />
+          <TripsDrop trips={trips} setTrip={(t) => handleSelectedTrip(t)} selectedTrip={selectedTrip} />
+          <Button variant='outline-success' className="mt-2" onClick={() => { createAndDownloadExcPdf(excursions, classes, trips) }}>Download report</Button>
         </Col>
         <Col md={9} className="mt-2">
           {excursions.length === 0 ?

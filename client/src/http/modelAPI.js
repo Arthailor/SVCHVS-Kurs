@@ -1,3 +1,4 @@
+import { saveAs } from "file-saver"
 import { $authHost, $host } from "./index"
 
 
@@ -87,6 +88,20 @@ export const deleteExcursion = async (id) => {
     return data
 }
 
+export const createAndDownloadExcPdf = async (excursions, classes, trips) => {
+    try {
+
+        await $authHost.post('api/excursion/pdf', { excursions, classes, trips });
+
+        const res = await $authHost.get('api/excursion/pdf', { responseType: 'blob' });
+
+        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+        saveAs(pdfBlob, `excursion-report.pdf`);
+    } catch (error) {
+        console.error("Error creating or downloading the PDF:", error);
+    }
+};
+
 //Attendance
 export const createAttendance = async (studentStudentId, status, date) => {
     const { data } = await $authHost.post('api/attendance/', { studentStudentId, status, date })
@@ -106,6 +121,21 @@ export const deleteAttendance = async (id) => {
     const { data } = await $authHost.delete('api/attendance/' + id)
     return data
 }
+
+export const createAndDownloadAttendPdf = async (date, classx, students, attendance) => {
+    try {
+
+        await $authHost.post('api/attendance/pdf', { date, classx, students, attendance });
+
+        const res = await $authHost.get('api/attendance/pdf', { responseType: 'blob' });
+
+        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+        saveAs(pdfBlob, `attendance-report-(${date}).pdf`);
+    } catch (error) {
+        console.error("Error creating or downloading the PDF:", error);
+    }
+};
+
 
 //Events
 export const createEvent = async (name, date) => {
