@@ -46,10 +46,17 @@ const Event = sequelize.define('event',{
     date: {type: DataTypes.DATEONLY, allowNull: false}
 })
 
-const Participant = sequelize.define('participant',{
-    participant_id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    grade: {type: DataTypes.INTEGER, allowNull: true}
-})
+const Participant = sequelize.define('participant', {
+    participant_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    grade: { type: DataTypes.INTEGER, allowNull: true }
+}, {
+    indexes: [
+        {
+            unique: true,
+            fields: ['studentStudentId', 'eventEventId']
+        }
+    ]
+});
 
 Employee.hasOne(Class, { onDelete: 'cascade' })
 Class.belongsTo(Employee)

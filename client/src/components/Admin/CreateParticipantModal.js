@@ -1,45 +1,64 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Form, Modal } from 'react-bootstrap'
-import { createParticipant, fetchClasses, fetchEvents, fetchStudents } from '../../http/modelAPI'
+import React, { useEffect, useState } from 'react';
+import { Button, Form, Modal } from 'react-bootstrap';
+import { createParticipant, fetchClasses, fetchEvents, fetchStudents } from '../../http/modelAPI';
 
 export default function CreateParticipantModal({ show, onHide }) {
-    const [event, setEvent] = useState(0)
-    const [student, setStudent] = useState(0)
-    const [classx, setClass] = useState(0)
-    const [grade, setGrade] = useState(0)
+    const [event, setEvent] = useState(null);
+    const [student, setStudent] = useState(null);
+    const [classx, setClass] = useState(null);
+    const [grade, setGrade] = useState(null);
 
-    const [events, setEvents] = useState([])
-    const [students, setStudents] = useState([])
-    const [classes, setClasses] = useState([])
-
+    const [events, setEvents] = useState([]);
+    const [students, setStudents] = useState([]);
+    const [classes, setClasses] = useState([]);
 
     useEffect(() => {
         fetchStudents(null, 1, 999).then(data => {
-            setStudents(data.rows)
-        })
+            setStudents(data.rows);
+        });
         fetchClasses(1, 999).then(data => {
-            setClasses(data.rows)
-        })
+            setClasses(data.rows);
+        });
         fetchEvents(null, 1, 999).then(data => {
-            setEvents(data.rows)
-        })
-    }, [])
+            setEvents(data.rows);
+        });
+    }, []);
 
     const addParticipant = async () => {
-
         try {
-            let data;
-            data = await createParticipant(student, classx, event, grade).then(() => {
-                onHide('')
-                setEvent(null)
-                setStudent(null)
-                setClass(null)
-                setGrade(null)
-            })
+            await createParticipant(student, classx, event, grade);
+            onHide();
+            setEvent(null);
+            setStudent(null);
+            setClass(null);
+            setGrade(null);
         } catch (e) {
-            alert(e.response.data.message)
+            alert(e.response.data.message);
+        }        
+    };
+
+    const handleStudentChange = (value) => {
+        setStudent(value);
+        if (value === "null") {
+            setStudent(null);
         }
-    }
+        if (value !== "null") {
+            setClass(null);
+        }
+    };
+
+    const handleClassChange = (value) => {
+        setClass(value);
+        if (value === "null") {
+            setClass(null);
+        }
+        if (value !== "null") {
+            setStudent(null);
+        }
+    };
+
+    const isButtonDisabled = !event || (!student && !classx) || !grade;
+
     return (
         <Modal
             show={show}
@@ -55,37 +74,36 @@ export default function CreateParticipantModal({ show, onHide }) {
             <Modal.Body>
                 <Form>
                     <Form.Select className="mt-2" value={event} onChange={e => setEvent(e.target.value)}>
-                        <option value={0}>Select event</option>
-                        {events.map(eve =>
-                            <option value={eve.event_id}>{eve.name}</option>
-                        )}
+                        <option value="null">Select event</option>
+                        {events.map(eve => (
+                            <option key={eve.event_id} value={eve.event_id}>{eve.name}</option>
+                        ))}
                     </Form.Select>
-                    {classx !== 0 ?
-                        <Form.Select className="mt-2" value={student} onChange={e => setStudent(e.target.value)} disabled>
-                            <option value={0}>Select student</option>
-                        </Form.Select>
-                        :
-                        <Form.Select className="mt-2" value={student} onChange={e => setStudent(e.target.value)}>
-                            <option value={0}>Select student</option>
-                            {students.map(std =>
-                                <option value={std.student_id}>{std.name} {std.surname}</option>
-                            )}
-                        </Form.Select>
-                    }
-                    {student === 0 ?
-                        <Form.Select className="mt-2" value={classx} onChange={e => setClass(e.target.value)}>
-                            <option value={0}>Select class</option>
-                            {classes.map(cls =>
-                                <option value={cls.class_id}>{cls.name}</option>
-                            )}
-                        </Form.Select>
-                        :
-                        <Form.Select className="mt-2" value={classx} onChange={e => setClass(e.target.value)} disabled>
-                            <option value={0}>Select class</option>
-                        </Form.Select>
-                    }
+
+                    <Form.Select 
+                        className="mt-2" 
+                        value={student} 
+                        onChange={e => handleStudentChange(e.target.value)} 
+                        disabled={classx !== null}>
+                        <option value="null">Select student</option>
+                        {students.map(std => (
+                            <option key={std.student_id} value={std.student_id}>{std.name} {std.surname}</option>
+                        ))}
+                    </Form.Select>
+
+                    <Form.Select 
+                        className="mt-2" 
+                        value={classx} 
+                        onChange={e => handleClassChange(e.target.value)} 
+                        disabled={student !== null}>
+                        <option value="null">Select class</option>
+                        {classes.map(cls => (
+                            <option key={cls.class_id} value={cls.class_id}>{cls.name}</option>
+                        ))}
+                    </Form.Select>
+
                     <Form.Select className="mt-2" value={grade} onChange={e => setGrade(e.target.value)}>
-                        <option value={0}>Select place</option>
+                        <option value="null">Select place</option>
                         <option value={1}>1</option>
                         <option value={2}>2</option>
                         <option value={3}>3</option>
@@ -94,12 +112,8 @@ export default function CreateParticipantModal({ show, onHide }) {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="outline-danger" onClick={onHide}>Close</Button>
-                {event === 0 || student === 0 || classx === 0 || grade === 0 ?
-                    <Button variant="outline-success" disabled>Add</Button>
-                    :
-                    <Button variant="outline-success" onClick={addParticipant}>Add</Button>
-                }
+                <Button variant="outline-success" onClick={addParticipant} disabled={isButtonDisabled}>Add</Button>
             </Modal.Footer>
         </Modal>
-    )
+    );
 }

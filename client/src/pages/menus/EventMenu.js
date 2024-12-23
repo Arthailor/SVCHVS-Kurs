@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setEvents, setPage, setSelectedDate, setTotalCount } from '../../store/eventsSlice';
 import EventsList from '../../components/EventsList';
 import Pages from '../../components/Pages';
-import { fetchClasses, fetchEvents, fetchStudents } from '../../http/modelAPI';
+import { fetchClasses, fetchEvents, fetchParticipants, fetchStudents } from '../../http/modelAPI';
 import { setClasses } from '../../store/classesSlice';
 import { setStudents } from '../../store/studentsSlice';
+import { setParticipants } from '../../store/participantsSlice';
 
 export default function EventMenu() {
   const { selectedDate, page, totalCount, limit } = useSelector(state => state.events);
@@ -31,9 +32,15 @@ export default function EventMenu() {
   const handleTotalCount = (t) => {
     dispatch(setTotalCount(t))
   }
+  const handleParticipants = (p) => {
+    dispatch(setParticipants(p))
+  }
   useEffect(() => {
     fetchClasses(1, 999).then(data => {
       handleClasses(data.rows)
+    })
+    fetchParticipants(null, 1, 999).then(data => {
+      handleParticipants(data.rows)
     })
     fetchStudents(null, 1, 999).then(data => {
       handleStudents(data.rows)

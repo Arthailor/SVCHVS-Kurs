@@ -1,7 +1,7 @@
 import React from 'react'
 import { Accordion, Button, ListGroup } from 'react-bootstrap'
 import { useSelector } from 'react-redux';
-import { deleteEvent } from '../http/modelAPI';
+import { deleteEvent, deleteParticipant } from '../http/modelAPI';
 
 export default function EventsList() {
     const { employee } = useSelector(state => state.employees);
@@ -11,8 +11,11 @@ export default function EventsList() {
     const { classes } = useSelector(state => state.classes);
 
     const delEvent = (eventId) => {
-            deleteEvent(eventId).finally(() => window.location.reload())
-        }
+        deleteEvent(eventId).finally(() => window.location.reload())
+    }
+    const delPart = (prtId) => {
+        deleteParticipant(prtId).finally(() => window.location.reload())
+    }
     return (
         <div>
             {events.length === 0 ?
@@ -54,7 +57,7 @@ export default function EventsList() {
                                                     Place: {p.grade}
                                                 </div>
                                                 {employee.employee_id === "ADMIN" ?
-                                                    <Button className="m-1 " variant="outline-danger" onClick={() => { /*delStudent(s.student_id)*/ }}>Delete</Button>
+                                                    <Button className="m-1 " variant="outline-danger" onClick={() => { delPart(p.participant_id) }}>Delete</Button>
                                                     :
                                                     ''
                                                 }

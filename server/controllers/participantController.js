@@ -1,5 +1,5 @@
 const ApiError = require("../error/apiError")
-const { Student, Class, Participant } = require("../models/models")
+const { Event, Student, Class, Participant } = require("../models/models")
 
 class ParticipantController{
     async create (req, res, next) {
@@ -51,10 +51,10 @@ class ParticipantController{
         limit = limit || 9
         let offset = page * limit - limit
         let participants
-        if (!class_id) {
+        if (!event_id) {
             participants = await Participant.findAndCountAll({ limit, offset })
         }
-        if (class_id) {
+        if (event_id) {
             participants = await Participant.findAndCountAll({ where: { eventEventId: event_id }, limit, offset })
         }
         return res.json(participants)
