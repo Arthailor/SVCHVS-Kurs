@@ -27,5 +27,5 @@ const classesSlice = createSlice({
   },
 });
 
-export const { setClasses, setSelectedTeacher, setPage, setTotalCount, setLimit } = classesSlice.actions;
+export const { setClasses, setPage, setTotalCount, setLimit } = classesSlice.actions;
 export default classesSlice.reducer;

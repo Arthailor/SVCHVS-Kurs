@@ -57,7 +57,7 @@ export default function CreateExcursionModal({ show, onHide }) {
                             <option value={trp.trip_id}>{trp.point_of_interest}</option>
                         )}
                     </Form.Select>
-                    <Form.Control type="date" className="mt-2" placeholder={"Name"} value={date} onChange={e => setDate(e.target.value)} />
+                    <Form.Control type="date" className="mt-2" value={date} onChange={e => setDate(e.target.value)} />
                 </Form>
             </Modal.Body>
             <Modal.Footer>

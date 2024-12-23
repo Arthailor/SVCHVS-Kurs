@@ -8,6 +8,7 @@ import { EMPLOYEES_ROUTE } from '../../utils/consts';
 import CreateClassModal from '../../components/Admin/CreateClassModal';
 import CreateStudentModal from '../../components/Admin/CreateStudentModal';
 import CreateExcursionModal from '../../components/Admin/CreateExcursionModal';
+import CreateAttendanceModal from '../../components/Admin/CreateAttendanceModal';
 
 export default function AdminMenu() {
   const { employee } = useSelector((state) => {
@@ -19,11 +20,13 @@ export default function AdminMenu() {
   const [createStudentVisible, setCreateStudentVisible] = useState(false)
   const [createClassVisible, setCreateClassVisible] = useState(false)
   const [createExcursionVisible, setCreateExcursionVisible] = useState(false)
+  const [createAttendanceVisible, setCreateAttendanceVisible] = useState(false)
 
   return (
     <Container className="d-flex flex-column">
       <Button variant={"outline-success"} className="mt-4 p-2" onClick={() => setCreateTripVisible(true)}>Add trip</Button>
       <Button variant={"outline-success"} className="mt-4 p-2" onClick={() => setCreateStudentVisible(true)}>Add student</Button>
+      <Button variant={"outline-success"} className="mt-4 p-2" onClick={() => setCreateAttendanceVisible(true)}>Add attendance</Button>
       <Button variant={"outline-success"} className="mt-4 p-2" onClick={() => setCreateClassVisible(true)}>Add class</Button>
       <Button variant={"outline-success"} className="mt-4 p-2" onClick={() => setCreateExcursionVisible(true)}>Add excursion</Button>
       {employee.employee_id === "ADMIN" ?
@@ -39,7 +42,8 @@ export default function AdminMenu() {
       <CreateEmployeeModal show={createEmployeeVisible} onHide={() => setCreateEmployeeVisible(false)} />
       <CreateStudentModal show={createStudentVisible} onHide={() => setCreateStudentVisible(false)} />
       <CreateClassModal show={createClassVisible} onHide={() => setCreateClassVisible(false)} />
-        <CreateExcursionModal show={createExcursionVisible} onHide={() => setCreateExcursionVisible(false)}/>
+      <CreateExcursionModal show={createExcursionVisible} onHide={() => setCreateExcursionVisible(false)} />
+      <CreateAttendanceModal show={createAttendanceVisible} onHide={() => setCreateAttendanceVisible(false)} />
     </Container>
   )
 }

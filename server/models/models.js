@@ -48,7 +48,7 @@ const Event = sequelize.define('event',{
 
 const Participant = sequelize.define('participant',{
     participant_id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    grade: {type: DataTypes.INTEGER, allowNull: false}
+    grade: {type: DataTypes.INTEGER, allowNull: true}
 })
 
 Employee.hasOne(Class, { onDelete: 'cascade' })
@@ -60,7 +60,7 @@ Student.belongsTo(Class)
 Class.belongsToMany(Trip,{through: Excursion}, { onDelete: 'cascade' })
 Trip.belongsToMany(Class,{through: Excursion}, { onDelete: 'cascade' })
 
-Student.hasMany(Attendance)
+Student.hasMany(Attendance, { onDelete: 'cascade' })
 Attendance.belongsTo(Student)
 
 Student.belongsToMany(Event,{through: Participant}, { onDelete: 'cascade' })

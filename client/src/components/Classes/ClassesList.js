@@ -58,7 +58,8 @@ export default function ClassesList({ classes }) {
                                 {students.find(std => std.classClassId === c.class_id) ?
                                     <ListGroup>Students:
                                         {students.filter(std => std.classClassId === c.class_id).map(s =>
-                                            <ListGroup.Item key={s.student_id}>{s.name} {s.surname}
+                                            <ListGroup.Item key={s.student_id} className='d-flex justify-content-between'>
+                                                <div>{s.name} {s.surname}</div>
                                                 {employee.employee_id === "ADMIN" || employee.employee_id === c.employeeEmployeeId ?
                                                     <Button className="m-1 " variant="outline-danger" onClick={() => { delStudent(s.student_id) }}>Delete</Button>
                                                     :
@@ -78,7 +79,7 @@ export default function ClassesList({ classes }) {
                                     <ListGroup>Teacher: none</ListGroup>
                                 }
                                 {employee.employee_id === "ADMIN" || employee.employee_id === c.employeeEmployeeId ?
-                                    <Button className="m-1 " variant="outline-danger" onClick={() => { delClass(c.class_id) }}>Delete</Button>
+                                    <Button className="m-1 " variant="outline-danger" onClick={() => { delClass(c.class_id) }}>Delete class</Button>
                                     :
                                     ''
                                 }
