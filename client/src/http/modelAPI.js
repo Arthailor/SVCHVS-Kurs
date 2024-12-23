@@ -106,3 +106,43 @@ export const deleteAttendance = async (id) => {
     const { data } = await $authHost.delete('api/attendance/' + id)
     return data
 }
+
+//Events
+export const createEvent = async (name, date) => {
+    const { data } = await $authHost.post('api/event/', { name, date })
+    return data
+}
+
+export const fetchEvents = async (date, page, limit) => {
+    const { data } = await $host.get('api/event/', {
+        params: {
+            date, page, limit
+        }
+    })
+    return data
+}
+
+export const deleteEvent = async (id) => {
+    const { data } = await $authHost.delete('api/event/' + id)
+    return data
+}
+
+//Participants
+export const createParticipant = async (studentStudentId, classClassId, eventEventId, grade) => {
+    const { data } = await $authHost.post('api/participant/', { studentStudentId, classClassId, eventEventId, grade })
+    return data
+}
+
+export const fetchParticipants = async (event_id, page, limit) => {
+    const { data } = await $host.get('api/participant/', {
+        params: {
+            event_id, page, limit
+        }
+    })
+    return data
+}
+
+export const deleteParticipant = async (id) => {
+    const { data } = await $authHost.delete('api/participant/' + id)
+    return data
+}

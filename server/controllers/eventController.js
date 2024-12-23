@@ -1,4 +1,5 @@
 const ApiError = require("../error/apiError")
+const { Event} = require("../models/models")
 
 class EventController{
     async create (req, res) {
@@ -21,7 +22,7 @@ class EventController{
             if (!event)
                 return next(ApiError.badRequest('Incorrect event id'))
             await Event.destroy(
-                { where: { event_id: attendaevent_idnce_id } },
+                { where: { event_id: event_id } },
             )
             return res.json()
         } catch (e) {

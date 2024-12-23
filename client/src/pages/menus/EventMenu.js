@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import { Col, Container, Form, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
-import { setPage, setSelectedDate } from '../../store/eventsSlice';
+import { setEvents, setPage, setSelectedDate, setTotalCount } from '../../store/eventsSlice';
 import EventsList from '../../components/EventsList';
 import Pages from '../../components/Pages';
-import { fetchClasses, fetchStudents } from '../../http/modelAPI';
+import { fetchClasses, fetchEvents, fetchStudents } from '../../http/modelAPI';
 import { setClasses } from '../../store/classesSlice';
 import { setStudents } from '../../store/studentsSlice';
 
@@ -25,14 +25,34 @@ export default function EventMenu() {
   const handleStudents = (s) => {
     dispatch(setStudents(s));
   };
+  const handleEvents = (e) => {
+    dispatch(setEvents(e))
+  };
+  const handleTotalCount = (t) => {
+    dispatch(setTotalCount(t))
+  }
   useEffect(() => {
-      fetchClasses( 1, 999).then(data => {
-        handleClasses(data.rows)
+    fetchClasses(1, 999).then(data => {
+      handleClasses(data.rows)
+    })
+    fetchStudents(null, 1, 999).then(data => {
+      handleStudents(data.rows)
+    })
+  }, [])
+
+  useEffect(() => {
+    if (selectedDate === "") {
+      fetchEvents(null, page, 6).then(data => {
+        handleEvents(data.rows)
+        handleTotalCount(data.count)
       })
-      fetchStudents(null, 1, 999).then(data => {
-        handleStudents(data.rows)
+    } else {
+      fetchEvents(selectedDate, page, 6).then(data => {
+        handleEvents(data.rows)
+        handleTotalCount(data.count)
       })
-    }, [])
+    }
+  }, [page, selectedDate])
   return (
     <Container>
       <Row className="mt-2">

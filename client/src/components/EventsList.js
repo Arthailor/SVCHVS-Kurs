@@ -1,6 +1,7 @@
 import React from 'react'
 import { Accordion, Button, ListGroup } from 'react-bootstrap'
 import { useSelector } from 'react-redux';
+import { deleteEvent } from '../http/modelAPI';
 
 export default function EventsList() {
     const { employee } = useSelector(state => state.employees);
@@ -8,6 +9,10 @@ export default function EventsList() {
     const { participants } = useSelector(state => state.participants)
     const { students } = useSelector(state => state.students);
     const { classes } = useSelector(state => state.classes);
+
+    const delEvent = (eventId) => {
+            deleteEvent(eventId).finally(() => window.location.reload())
+        }
     return (
         <div>
             {events.length === 0 ?
@@ -32,13 +37,21 @@ export default function EventsList() {
                                         {participants.filter(prt => prt.eventEventId === e.event_id).map(p =>
                                             <ListGroup.Item key={p.participant_id} className='d-flex justify-content-between'>
                                                 <div>
-                                                    {p.studentStudentId === null ?
-                                                        "Class: " + classes.find(cls => cls.class_id === p.classClassId).name
-                                                        :
-                                                        "Student: " + students.find(std => std.student_id === p.studentStudentId).name + " " + students.find(std => std.student_id === p.studentStudentId).surname
+                                                    {
+                                                        classes.length === 0 || students.length === 0 ?
+                                                            ""
+                                                            :
+                                                            <div>
+                                                                {p.studentStudentId === null ?
+                                                                    "Class: " + classes.find(cls => cls.class_id === p.classClassId).name
+                                                                    :
+                                                                    "Student: " + students.find(std => std.student_id === p.studentStudentId).name + " " + students.find(std => std.student_id === p.studentStudentId).surname
+                                                                }
+                                                            </div>
                                                     }
+
                                                     <br />
-                                                    Grade: {p.grade}
+                                                    Place: {p.grade}
                                                 </div>
                                                 {employee.employee_id === "ADMIN" ?
                                                     <Button className="m-1 " variant="outline-danger" onClick={() => { /*delStudent(s.student_id)*/ }}>Delete</Button>
@@ -52,7 +65,7 @@ export default function EventsList() {
                                     <ListGroup>Participants: <ListGroup.Item key={1}>none</ListGroup.Item></ListGroup>
                                 }
                                 {employee.employee_id === "ADMIN" ?
-                                    <Button className="m-1 " variant="outline-danger" onClick={() => { /*delClass(c.class_id)*/ }}>Delete event</Button>
+                                    <Button className="m-1 " variant="outline-danger" onClick={() => { delEvent(e.event_id) }}>Delete event</Button>
                                     :
                                     ''
                                 }

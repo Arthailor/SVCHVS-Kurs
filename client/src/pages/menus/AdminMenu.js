@@ -9,6 +9,8 @@ import CreateClassModal from '../../components/Admin/CreateClassModal';
 import CreateStudentModal from '../../components/Admin/CreateStudentModal';
 import CreateExcursionModal from '../../components/Admin/CreateExcursionModal';
 import CreateAttendanceModal from '../../components/Admin/CreateAttendanceModal';
+import CreateEventModal from '../../components/Admin/CreateEventModal';
+import CreateParticipantModal from '../../components/Admin/CreateParticipantModal';
 
 export default function AdminMenu() {
   const { employee } = useSelector((state) => {
@@ -21,14 +23,19 @@ export default function AdminMenu() {
   const [createClassVisible, setCreateClassVisible] = useState(false)
   const [createExcursionVisible, setCreateExcursionVisible] = useState(false)
   const [createAttendanceVisible, setCreateAttendanceVisible] = useState(false)
+  const [createEventVisible, setCreateEventVisible] = useState(false)
+  const [createParticipantVisible, setCreateParticipantVisible] = useState(false)
 
   return (
     <Container className="d-flex flex-column">
       <Button variant={"outline-success"} className="mt-4 p-2" onClick={() => setCreateTripVisible(true)}>Add trip</Button>
+      <Button variant={"outline-success"} className="mt-4 p-2" onClick={() => setCreateExcursionVisible(true)}>Add excursion</Button>
+      <Button variant={"outline-success"} className="mt-4 p-2" onClick={() => setCreateClassVisible(true)}>Add class</Button>
       <Button variant={"outline-success"} className="mt-4 p-2" onClick={() => setCreateStudentVisible(true)}>Add student</Button>
       <Button variant={"outline-success"} className="mt-4 p-2" onClick={() => setCreateAttendanceVisible(true)}>Add attendance</Button>
-      <Button variant={"outline-success"} className="mt-4 p-2" onClick={() => setCreateClassVisible(true)}>Add class</Button>
-      <Button variant={"outline-success"} className="mt-4 p-2" onClick={() => setCreateExcursionVisible(true)}>Add excursion</Button>
+      <Button variant={"outline-success"} className="mt-4 p-2" onClick={() => setCreateEventVisible(true)}>Add event</Button>
+      <Button variant={"outline-success"} className="mt-4 p-2" onClick={() => setCreateParticipantVisible(true)}>Add participant</Button>
+      
       {employee.employee_id === "ADMIN" ?
         <Button variant={"outline-primary"} className="mt-4 p-2" onClick={() => setCreateEmployeeVisible(true)}>Add employee</Button>
         :
@@ -44,6 +51,8 @@ export default function AdminMenu() {
       <CreateClassModal show={createClassVisible} onHide={() => setCreateClassVisible(false)} />
       <CreateExcursionModal show={createExcursionVisible} onHide={() => setCreateExcursionVisible(false)} />
       <CreateAttendanceModal show={createAttendanceVisible} onHide={() => setCreateAttendanceVisible(false)} />
+      <CreateEventModal show={createEventVisible} onHide={() => setCreateEventVisible(false)} />
+        <CreateParticipantModal show={createParticipantVisible} onHide={() => setCreateParticipantVisible(false)} />
     </Container>
   )
 }
