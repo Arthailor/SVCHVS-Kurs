@@ -11,11 +11,13 @@ export default function EventsList() {
     const { classes } = useSelector(state => state.classes);
 
     const delEvent = (eventId) => {
-        deleteEvent(eventId).finally(() => window.location.reload())
+        deleteEvent(eventId).finally(() => window.location.reload());
     }
+
     const delPart = (prtId) => {
-        deleteParticipant(prtId).finally(() => window.location.reload())
+        deleteParticipant(prtId).finally(() => window.location.reload());
     }
+
     return (
         <div>
             {events.length === 0 ?
@@ -30,47 +32,39 @@ export default function EventsList() {
                 :
                 <Accordion defaultActiveKey="0">
                     {events.map(e =>
-                        <Accordion.Item eventKey={e.event_id}>
+                        <Accordion.Item key={e.event_id} eventKey={e.event_id}>
                             <Accordion.Header className="d-flex justify-content-between">
                                 <div>{e.name} - ({e.date})</div>
                             </Accordion.Header>
                             <Accordion.Body>
-                                {participants.find(prt => prt.eventEventId === e.event_id) ?
+                                {participants.some(prt => prt.eventEventId === e.event_id) ?
                                     <ListGroup>Participants:
-                                        {participants.filter(prt => prt.eventEventId === e.event_id).map(p =>
-                                            <ListGroup.Item key={p.participant_id} className='d-flex justify-content-between'>
-                                                <div>
-                                                    {
-                                                        classes.length === 0 || students.length === 0 ?
-                                                            ""
-                                                            :
-                                                            <div>
-                                                                {p.studentStudentId === null ?
-                                                                    "Class: " + classes.find(cls => cls.class_id === p.classClassId).name
-                                                                    :
-                                                                    "Student: " + students.find(std => std.student_id === p.studentStudentId).name + " " + students.find(std => std.student_id === p.studentStudentId).surname
-                                                                }
-                                                            </div>
-                                                    }
+                                        {participants.filter(prt => prt.eventEventId === e.event_id).map(p => {
+                                            const student = p.studentStudentId ? students.find(std => std.student_id === p.studentStudentId) : null;
+                                            const studentName = student ? `${student.name} ${student.surname}` : null;
 
-                                                    <br />
-                                                    Place: {p.grade}
-                                                </div>
-                                                {employee.employee_id === "ADMIN" ?
-                                                    <Button className="m-1 " variant="outline-danger" onClick={() => { delPart(p.participant_id) }}>Delete</Button>
-                                                    :
-                                                    ''
-                                                }
-                                            </ListGroup.Item>
-                                        )}
+                                            const classItem = p.classClassId ? classes.find(cls => cls.class_id === p.classClassId) : null;
+                                            const className = classItem ? `Class: ${classItem.name}` : null;
+
+                                            return (
+                                                <ListGroup.Item key={p.participant_id} className='d-flex justify-content-between'>
+                                                    <div>
+                                                        {studentName || className || ""}
+                                                        <br />
+                                                        Place: {p.grade}
+                                                    </div>
+                                                    {employee.employee_id === "ADMIN" &&
+                                                        <Button className="m-1" variant="outline-danger" onClick={() => { delPart(p.participant_id) }}>Delete</Button>
+                                                    }
+                                                </ListGroup.Item>
+                                            );
+                                        })}
                                     </ListGroup>
                                     :
                                     <ListGroup>Participants: <ListGroup.Item key={1}>none</ListGroup.Item></ListGroup>
                                 }
-                                {employee.employee_id === "ADMIN" ?
-                                    <Button className="m-1 " variant="outline-danger" onClick={() => { delEvent(e.event_id) }}>Delete event</Button>
-                                    :
-                                    ''
+                                {employee.employee_id === "ADMIN" &&
+                                    <Button className="m-1" variant="outline-danger" onClick={() => { delEvent(e.event_id) }}>Delete event</Button>
                                 }
                             </Accordion.Body>
                         </Accordion.Item>
