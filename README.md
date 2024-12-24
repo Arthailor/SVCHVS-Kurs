@@ -33,7 +33,11 @@
 
 ## Использование
 
-При запуске Web-приложения нажать кнопку Authorization и ввести admin admin
+При запуске Web-приложения нажать кнопку Authorization и ввести admin admin.
+
+В файле MainMenu.js можно раскомментировать кнопку Seeding для заполнения базы данных (нужно быть авторизованным).
+
+Заполнятся все таблицы кроме trips и excursions. Для этого в директории examples есть текстовый файл с данными и фотографии.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->

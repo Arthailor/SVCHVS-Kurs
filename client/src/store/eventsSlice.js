@@ -2,13 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     events: [
-        // { event_id: 1, name: "Олимпиада по математике", date: "2024-12-1" },
-        // { event_id: 2, name: "Соревнование по физкультуре", date: "2024-12-2" },
-        // { event_id: 3, name: "Олимпиада по английскому языку", date: "2024-12-3" },
-        // { event_id: 4, name: "Олимпиада по физике", date: "2024-12-4" },
-        // { event_id: 5, name: "Конкурс 'Лучший певец'", date: "2024-12-5" },
-        // { event_id: 6, name: "Соревнование по карате", date: "2024-12-6" },
-        // { event_id: 7, name: "Конкурс 'Лучший танцор'", date: "2024-12-7" },
     ],
     selectedDate: "",
     page: 1,

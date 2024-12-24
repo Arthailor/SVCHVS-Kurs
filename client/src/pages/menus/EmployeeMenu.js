@@ -22,14 +22,14 @@ export default function EmployeeListMenu() {
       }
 
     useEffect(() => {
-        fetchEmployees(1, 16).then(data => {
+        fetchEmployees(1, 12).then(data => {
             handleEmployees(data.rows)
             handleTotalCount(data.count)
         })
     }, [])
 
     useEffect(() => {
-        fetchEmployees(page, 16).then(data => {
+        fetchEmployees(page, 12).then(data => {
             handleEmployees(data.rows)
             handleTotalCount(data.count)
         })

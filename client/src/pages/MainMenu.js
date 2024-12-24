@@ -2,6 +2,7 @@ import React from 'react'
 import { Container, Form, Card, Button, Image } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom';
 import { ATTENDANCE_ROUTE, CLASSES_ROUTE, EVENTS_ROUTE, EXCURSIONS_ROUTE, TRIPS_ROUTE } from '../utils/consts';
+import { seeding } from '../seeding';
 
 export default function MainMenu() {
   return (
@@ -47,7 +48,9 @@ export default function MainMenu() {
               <div></div>
             </Button>
           </NavLink>
-
+          {/* <Button className="d-flex justify-content-center mt-3" variant={"outline-primary"} style={{ width: "100%" }} onClick={()=>{seeding()}}>
+              <div>Seeding</div>
+          </Button> */}
         </Form>
       </Card>
     </Container>

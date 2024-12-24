@@ -6,6 +6,6 @@ const authMiddleware = require('../middleware/authMiddleware')
 router.post('/', authMiddleware, studentController.create)
 router.delete('/:student_id', authMiddleware, studentController.delete)
 router.get('/', studentController.getAll)
-router.get('/:student_id', studentController.getOne)
+//router.get('/:student_id', studentController.getOne)
 
 module.exports = router

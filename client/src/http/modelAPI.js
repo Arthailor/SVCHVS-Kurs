@@ -17,11 +17,6 @@ export const fetchTrips = async (town, page, limit) => {
     return data
 }
 
-export const fetchOneTrip = async (id) => {
-    const { data } = await $host.get('api/trip/' + id)
-    return data
-}
-
 export const deleteTrip = async (id) => {
     const { data } = await $authHost.delete('api/trip/' + id)
     return data

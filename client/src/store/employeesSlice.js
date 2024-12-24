@@ -6,7 +6,7 @@ const initialState = {
   isAuth: false,
   page: 1,
   totalCount: 0,
-  limit: 16
+  limit: 12
 };
 
 const employeesSlice = createSlice({

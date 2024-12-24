@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import {setPage} from './studentsSlice'
 
 var today = new Date();
 var dd = String(today.getDate()).padStart(2, '0');
@@ -21,16 +22,23 @@ const excursionsSlice = createSlice({
     setAttendance: (state, action) => {
       state.attendance = action.payload;
     },
-    setSelectedDate: (state, action) => {
+    _setSelectedDate: (state, action) => {
       state.selectedDate = action.payload;
-      state.page = 1;
     },
-    setSelectedClass: (state, action) => {
+    _setSelectedClass: (state, action) => {
       state.selectedClass = action.payload;
-      state.page = 1;
     }
   },
 });
 
-export const { setAttendance, setSelectedDate, setSelectedClass } = excursionsSlice.actions;
+export const { setAttendance, _setSelectedDate, _setSelectedClass } = excursionsSlice.actions;
+export const setSelectedDate = (date) => (dispatch) => {
+  dispatch(_setSelectedDate(date));
+  dispatch(setPage(1));
+};
+
+export const setSelectedClass = (className) => (dispatch) => {
+  dispatch(_setSelectedClass(className));
+  dispatch(setPage(1));
+};
 export default excursionsSlice.reducer;
