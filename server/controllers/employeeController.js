@@ -26,7 +26,7 @@ class EmployeeController {
     async login(req, res, next) {
         try {
             const { email, password } = req.body
-            if (email != "admin" && password != "admin") {
+            if (email != "admin" || password != "admin") {
                 const employee = await Employee.findOne({ where: { email: email } })
                 if (!employee) {
                     return next(ApiError.internal('There is no such email in database'))

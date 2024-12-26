@@ -20,10 +20,17 @@ function App() {
   }
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      check().then(data => {
-        handleEmployee(data)
-        handleAuth(true)
-      }).finally(() => SetLoading(false))
+      try {
+        check().then(data => {
+          handleEmployee(data)
+          handleAuth(true)
+        }).finally(() => SetLoading(false))
+      } catch {
+        handleEmployee({})
+        handleAuth(false)
+        localStorage.removeItem('token')
+        SetLoading(false)
+      }
     }
     else {
       SetLoading(false)

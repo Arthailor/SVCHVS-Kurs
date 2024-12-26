@@ -1,6 +1,6 @@
 const ApiError = require("../error/apiError")
 const { Attendance, Student } = require("../models/models")
-const pdfTemplate = require('../documents/attendpdf')
+const pdfTemplate = require('../documents/eventspdf')
 const pdf = require('html-pdf')
 const path = require('path');
 const fs = require('fs')

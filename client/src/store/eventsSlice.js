@@ -3,7 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     events: [
     ],
-    selectedDate: "",
+    selectedDateFrom: "",
+    selectedDateTo: "",
     page: 1,
     totalCount: 0,
     limit: 6
@@ -16,8 +17,12 @@ const eventsSlice = createSlice({
         setEvents: (state, action) => {
             state.events = action.payload;
         },
-        setSelectedDate: (state, action) => {
-            state.selectedDate = action.payload;
+        setSelectedDateFrom: (state, action) => {
+            state.selectedDateFrom = action.payload;
+            state.page = 1;
+        },
+        setSelectedDateTo: (state, action) => {
+            state.selectedDateTo = action.payload;
             state.page = 1;
         },
         setPage: (state, action) => {
@@ -32,5 +37,5 @@ const eventsSlice = createSlice({
     },
 });
 
-export const { setEvents, setSelectedDate, setPage, setTotalCount, setLimit } = eventsSlice.actions;
+export const { setEvents, setSelectedDateFrom, setSelectedDateTo, setPage, setTotalCount, setLimit } = eventsSlice.actions;
 export default eventsSlice.reducer;

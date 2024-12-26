@@ -7,6 +7,7 @@ export default function CreateParticipantModal({ show, onHide }) {
     const [student, setStudent] = useState(null);
     const [classx, setClass] = useState(null);
     const [grade, setGrade] = useState(null);
+    const [selectedEventType, setSelectedEventType] = useState(null); // Track selected event type
 
     const [events, setEvents] = useState([]);
     const [students, setStudents] = useState([]);
@@ -19,7 +20,7 @@ export default function CreateParticipantModal({ show, onHide }) {
         fetchClasses(1, 999).then(data => {
             setClasses(data.rows);
         });
-        fetchEvents(null, 1, 999).then(data => {
+        fetchEvents(null, null, 1, 999).then(data => {
             setEvents(data.rows);
         });
     }, []);
@@ -35,6 +36,18 @@ export default function CreateParticipantModal({ show, onHide }) {
         } catch (e) {
             alert(e.response.data.message);
         }        
+    };
+
+    const handleEventChange = (value) => {
+        setEvent(value);
+
+        const selectedEvent = events.find(eve => eve.event_id === parseInt(value, 10));
+        setSelectedEventType(selectedEvent ? selectedEvent.type : null);
+
+        // Reset grade if the event type is not 'Конкурс' or 'Олимпиада'
+        if (selectedEvent && selectedEvent.type !== 'Конкурс' && selectedEvent.type !== 'Олимпиада') {
+            setGrade(null);
+        }
     };
 
     const handleStudentChange = (value) => {
@@ -57,7 +70,8 @@ export default function CreateParticipantModal({ show, onHide }) {
         }
     };
 
-    const isButtonDisabled = !event || (!student && !classx) || !grade;
+    const isGradeRequired = selectedEventType === 'Конкурс' || selectedEventType === 'Олимпиада';
+    const isButtonDisabled = !event || (!student && !classx) || (isGradeRequired && !grade);
 
     return (
         <Modal
@@ -73,10 +87,10 @@ export default function CreateParticipantModal({ show, onHide }) {
             </Modal.Header>
             <Modal.Body>
                 <Form>
-                    <Form.Select className="mt-2" value={event} onChange={e => setEvent(e.target.value)}>
+                    <Form.Select className="mt-2" value={event} onChange={e => handleEventChange(e.target.value)}>
                         <option value="null">Select event</option>
                         {events.map(eve => (
-                            <option key={eve.event_id} value={eve.event_id}>{eve.name}</option>
+                            <option key={eve.event_id} value={eve.event_id}>{eve.type} "{eve.name}"</option>
                         ))}
                     </Form.Select>
 
@@ -102,7 +116,11 @@ export default function CreateParticipantModal({ show, onHide }) {
                         ))}
                     </Form.Select>
 
-                    <Form.Select className="mt-2" value={grade} onChange={e => setGrade(e.target.value)}>
+                    <Form.Select 
+                        className="mt-2" 
+                        value={grade} 
+                        onChange={e => setGrade(e.target.value)} 
+                        disabled={!isGradeRequired}>
                         <option value="null">Select place</option>
                         <option value={1}>1</option>
                         <option value={2}>2</option>

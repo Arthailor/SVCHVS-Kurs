@@ -1,15 +1,8 @@
 import React from 'react'
-import { Accordion, Button, ListGroup } from 'react-bootstrap'
-import { useSelector } from 'react-redux';
+import { Accordion, Button, ListGroup, Image } from 'react-bootstrap'
 import { deleteEvent, deleteParticipant } from '../http/modelAPI';
 
-export default function EventsList() {
-    const { employee } = useSelector(state => state.employees);
-    const { events } = useSelector(state => state.events);
-    const { participants } = useSelector(state => state.participants)
-    const { students } = useSelector(state => state.students);
-    const { classes } = useSelector(state => state.classes);
-
+export default function EventsList({employee, events, participants, students, classes}) {
     const delEvent = (eventId) => {
         deleteEvent(eventId).finally(() => window.location.reload());
     }
@@ -34,9 +27,20 @@ export default function EventsList() {
                     {events.map(e =>
                         <Accordion.Item key={e.event_id} eventKey={e.event_id}>
                             <Accordion.Header className="d-flex justify-content-between">
-                                <div>{e.name} - ({e.date})</div>
+                                {e.name === "" ? 
+                                <div>{e.type} - ({e.date})</div>
+                                :
+                                <div>{e.type} "{e.name}" - ({e.date})</div>
+                                }
                             </Accordion.Header>
                             <Accordion.Body>
+                                {e.file ? (
+                                    e.file.substr(e.file.length - 3) === "mp4" ? 
+                                    <video controls style={{ maxWidth: "100%", maxHeight: "auto" }} src={process.env.REACT_APP_API_URL + e.file} />
+                                    :
+                                    <Image style={{ maxWidth: "100%", maxHeight: "auto" }} src={process.env.REACT_APP_API_URL + e.file} />
+                                ) : null}
+                                
                                 {participants.some(prt => prt.eventEventId === e.event_id) ?
                                     <ListGroup>Participants:
                                         {participants.filter(prt => prt.eventEventId === e.event_id).map(p => {
@@ -50,8 +54,7 @@ export default function EventsList() {
                                                 <ListGroup.Item key={p.participant_id} className='d-flex justify-content-between'>
                                                     <div>
                                                         {studentName || className || ""}
-                                                        <br />
-                                                        Place: {p.grade}
+                                                        {p.grade !== null && <><br />Place: {p.grade}</>}
                                                     </div>
                                                     {employee.employee_id === "ADMIN" &&
                                                         <Button className="m-1" variant="outline-danger" onClick={() => { delPart(p.participant_id) }}>Delete</Button>

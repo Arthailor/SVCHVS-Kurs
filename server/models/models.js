@@ -21,19 +21,6 @@ const Student = sequelize.define('student', {
     surname: { type: DataTypes.STRING, allowNull: false }
 })
 
-const Trip = sequelize.define('trip', {
-    trip_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    town: { type: DataTypes.STRING, allowNull: false },
-    point_of_interest: { type: DataTypes.STRING, allowNull: false },
-    description: { type: DataTypes.STRING(755), allowNull: true },
-    img: { type: DataTypes.STRING, allowNull: true }
-})
-
-const Excursion = sequelize.define('excursion', {
-    excursion_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    date: { type: DataTypes.DATEONLY, allowNull: false }
-})
-
 const Attendance = sequelize.define('attendance', {
     attendance_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     status: { type: DataTypes.BOOLEAN, allowNull: false },
@@ -43,7 +30,9 @@ const Attendance = sequelize.define('attendance', {
 const Event = sequelize.define('event', {
     event_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.STRING, allowNull: false },
-    date: { type: DataTypes.DATEONLY, allowNull: false }
+    date: { type: DataTypes.DATEONLY, allowNull: false },
+    type: { type: DataTypes.STRING, allowNull: false},
+    file: { type: DataTypes.STRING, allowNull: true}
 })
 
 const Participant = sequelize.define('participant', {
@@ -84,9 +73,6 @@ Class.belongsTo(Employee)
 Class.hasOne(Student, { onDelete: 'cascade' })
 Student.belongsTo(Class)
 
-Class.belongsToMany(Trip, { through: Excursion }, { onDelete: 'cascade' })
-Trip.belongsToMany(Class, { through: Excursion }, { onDelete: 'cascade' })
-
 Student.hasMany(Attendance, { onDelete: 'cascade' })
 Attendance.belongsTo(Student)
 
@@ -100,27 +86,25 @@ Event.belongsToMany(Student, {
     through: Participant,
     foreignKey: 'eventEventId',   
     otherKey: 'studentStudentId', 
-    onDelete: 'CASCADE',
+    onDelete: 'cascade',
 });
 Class.belongsToMany(Event, {
     through: Participant,
     foreignKey: 'classClassId',   
     otherKey: 'eventEventId',    
-    onDelete: 'CASCADE',
+    onDelete: 'cascade',
 });
 Event.belongsToMany(Class, {
     through: Participant,
     foreignKey: 'eventEventId',  
     otherKey: 'classClassId',  
-    onDelete: 'CASCADE',
+    onDelete: 'cascade',
 });
 
 module.exports = {
     Employee,
     Class,
     Student,
-    Trip,
-    Excursion,
     Attendance,
     Event,
     Participant,

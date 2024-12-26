@@ -35,7 +35,6 @@ export default function NavBar() {
     <Navbar bg="primary" data-bs-theme="dark">
       <Container>
         <NavLink to={MAIN_ROUTE}><Image width ="35" src="./favico.ico" fluid/></NavLink>
-        {/* <NavLink style={{ color: 'white' }} to={MAIN_ROUTE}>School</NavLink> */}
         {isAuth ?
           <Nav className="ml-auto" style={{ color: 'white' }}>
             <Button variant={"outline-light"} onClick={() => history(ADMIN_ROUTE)}>Admin Menu</Button>
